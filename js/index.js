@@ -25,9 +25,17 @@
     let lastScroll;
     let scrollingSpeed = 0;
     // scroll position update function
-    const getPageYScroll = () => docScroll = window.pageYOffset || document.documentElement.scrollTop;
+    let scrollValue = 0;
+    let eltscroll = document.querySelector('.scroll');
+    let eltlayout = document.querySelector('.black-layout');
+    let eltvideo = document.querySelector('.back-video');
+    const getPageYScroll = () => {
+        docScroll = window.pageYOffset || document.documentElement.scrollTop;
+       
+        eltscroll.style.opacity = 1 - docScroll/100;
+        eltlayout.style.opacity = docScroll/500;
+    }
     window.addEventListener('scroll', getPageYScroll);
-
     // Item
     class Item {
         constructor(el) {
@@ -103,12 +111,6 @@
         }
         initEvents() {
             window.addEventListener('resize', () => this.resize());
-            let visible = true;
-            window.addEventListener('scroll', (e) => {
-                if(e.timeStamp > 2000 && visible == true) {
-                    document.querySelector('.scroll').style.opacity = '0';
-                }
-            })
         }
         resize() {
             // gets the item's height and top (relative to the document)
